@@ -7,3 +7,4 @@ app.set('port', PORT);
 
 const server = http.createServer(app);
 server.listen(PORT);
+console.log('Este es el puerto ' + PORT);

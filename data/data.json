@@ -1,3 +1,1 @@
-{
-    "Lista": [{}, {}]
-}
+"{\r\n    \"Things\": [\r\n        { \"id\": 1, \"name\": \"manejarGIT\", \"category\": \"front\", \"difficulty\": 5 },\r\n        { \"id\": 2, \"name\": \"HTML\", \"category\": \"front\", \"difficulty\": 6 },\r\n        { \"id\": 3, \"name\": \"CSS\", \"category\": \"front\", \"difficulty\": 7 }\r\n    ]\r\n}\r\n"
