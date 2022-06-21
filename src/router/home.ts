@@ -1,10 +1,9 @@
 import { Router } from 'express';
 
-const router = Router();
+export const routerHome = Router();
 
-router.get('/', (req, resp) => {
+routerHome.get('/', (req, resp) => {
     req;
+    resp.setHeader('Content-type', 'text-html');
     resp.end('App Express');
 });
-
-export default router;
