@@ -26,18 +26,34 @@ export const getIdController = (req: Request, resp: Response) => {
 };
 
 export const postController = async (req: Request, resp: Response) => {
-    let data = JSON.parse(dataFileContent).Things;
     console.log(data, 'PRUEBAAAAAA');
     const newThings = { ...req.body, id: data[data.length - 1].id + 1 };
     data.push(newThings);
-    console.log(newThings);
+    console.log(data, 'INCLUIDO');
 
-    await fs.writeFile(dataFilePath, JSON.stringify(dataFileContent));
+    await fs.writeFile(dataFilePath, dataFileContent);
     resp.setHeader('Content-type', 'application/json');
     resp.status(201);
-    resp.end(newThings);
+    resp.end(JSON.stringify(newThings));
 };
 
-export const patchController = (req: Request, resp: Response) => {};
+export const patchController = (req: Request, resp: Response) => {
+    let newThings;
+    data = data.map((item: any) => {
+        if (item.id === +req.params.id) {
+            newThings = { ...item, ...req.body };
+            return newThings;
+        } else {
+            return item;
+        }
+    });
+    resp.setHeader('Content-type', 'application/json');
+    resp.end(JSON.stringify(newThings));
+};
 
-export const deleteController = (req: Request, resp: Response) => {};
+export const deleteController = (req: Request, resp: Response) => {
+    const prevLength = data.length;
+    data = data.filter((item: any) => item.id !== +req.params.id);
+    resp.status(prevLength === data.length ? 404 : 202);
+    resp.end(JSON.stringify({}));
+};
