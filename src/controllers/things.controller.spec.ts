@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
-import { getController, getIdController } from './things.controller';
+import {
+    deleteController,
+    getController,
+    getIdController,
+    patchController,
+    postController,
+} from './things.controller';
 import fs from 'fs/promises';
 
 jest.mock('fs/promises');
@@ -62,6 +68,69 @@ describe('Given a instantiated controller things Controller', () => {
                 params: { id: '8' },
             };
             await getIdController(req as Request, resp as Response);
+            expect(resp.end).toHaveBeenCalled();
+        });
+    });
+    describe('When method postController is called', () => {
+        test('Then resp.end should be called', async () => {
+            let dataFileContent = {
+                id: 1,
+                name: 'manejarGIT',
+                category: 'front',
+                difficulty: 2,
+            };
+            (fs.writeFile as jest.Mock).mockResolvedValue(
+                JSON.stringify({ Things: [dataFileContent] })
+            );
+            await postController(req as Request, resp as Response);
+            expect(resp.end).toHaveBeenCalled();
+        });
+    });
+    describe('When method pathController is called', () => {
+        test('Then resp.end should be called', async () => {
+            let dataFileContent = {
+                id: 1,
+                name: 'manejarGIT',
+                category: 'front',
+                difficulty: 2,
+            };
+            (fs.writeFile as jest.Mock).mockResolvedValue(
+                JSON.stringify({ Things: [dataFileContent] })
+            );
+            await patchController(req as Request, resp as Response);
+            expect(resp.end).toHaveBeenCalled();
+        });
+    });
+    describe('When method pathController is called', () => {
+        test('Then resp.end should be called', async () => {
+            let dataFileContent = {
+                id: 1,
+                name: 'manejarGIT',
+                category: 'front',
+                difficulty: 2,
+            };
+            (fs.writeFile as jest.Mock).mockResolvedValue(
+                JSON.stringify({ Things: [dataFileContent] })
+            );
+            req = {
+                params: { id: '8' },
+            };
+            await patchController(req as Request, resp as Response);
+            expect(resp.end).toHaveBeenCalled();
+        });
+    });
+    describe('When method deleteController is called', () => {
+        test('Then resp.end should be called', async () => {
+            let dataFileContent = {
+                id: 1,
+                name: 'manejarGIT',
+                category: 'front',
+                difficulty: 2,
+            };
+            (fs.writeFile as jest.Mock).mockResolvedValue(
+                JSON.stringify({ Things: [dataFileContent] })
+            );
+            await deleteController(req as Request, resp as Response);
             expect(resp.end).toHaveBeenCalled();
         });
     });
