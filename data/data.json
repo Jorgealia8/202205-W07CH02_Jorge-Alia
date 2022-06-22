@@ -1,1 +1,6 @@
-{"Things":[{"id":1,"name":"manejarGIT","category":"front","difficulty":2},{"id":3,"name":"CSS","category":"front","difficulty":7}]}
+{
+    "Things": [
+        { "id": 1, "name": "manejarGIT", "category": "front", "difficulty": 2 },
+        { "id": 3, "name": "CSS", "category": "front", "difficulty": 7 }
+    ]
+}

@@ -3,18 +3,22 @@ import fs from 'fs/promises';
 
 const dataFilePath = './data/data.json';
 
-let dataFileContent = await fs.readFile(dataFilePath, {
-    encoding: 'utf-8',
-});
-export const getController = (req: Request, resp: Response) => {
+export const getController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
+
     req;
     resp.setHeader('Content-type', 'application/json');
     resp.end(dataFileContent);
 };
 
-let data = JSON.parse(dataFileContent);
+export const getIdController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
 
-export const getIdController = (req: Request, resp: Response) => {
+    let data = JSON.parse(dataFileContent);
     resp.setHeader('Content-type', 'application/json');
     const result = data.Things.find((item: any) => item.id === +req.params.id);
     if (result) {
@@ -26,6 +30,11 @@ export const getIdController = (req: Request, resp: Response) => {
 };
 
 export const postController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
+
+    let data = JSON.parse(dataFileContent);
     console.log(data, 'PRUEBAAAAAA');
     const newThings = {
         ...req.body,
@@ -41,6 +50,11 @@ export const postController = async (req: Request, resp: Response) => {
 };
 
 export const patchController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
+
+    let data = JSON.parse(dataFileContent);
     let newThings;
     data.Things = data.Things.map((item: any) => {
         if (item.id === +req.params.id) {
@@ -56,6 +70,11 @@ export const patchController = async (req: Request, resp: Response) => {
 };
 
 export const deleteController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
+
+    let data = JSON.parse(dataFileContent);
     const prevLength = data.Things.length;
     data.Things = data.Things.filter((item: any) => item.id !== +req.params.id);
 
