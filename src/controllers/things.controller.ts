@@ -3,20 +3,24 @@ import fs from 'fs/promises';
 
 const dataFilePath = './data/data.json';
 
-let dataFileContent = await fs.readFile(dataFilePath, {
-    encoding: 'utf-8',
-});
-export const getController = (req: Request, resp: Response) => {
+export const getController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
+
     req;
     resp.setHeader('Content-type', 'application/json');
     resp.end(dataFileContent);
 };
 
-let data = JSON.parse(dataFileContent).Things;
+export const getIdController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
 
-export const getIdController = (req: Request, resp: Response) => {
+    let data = JSON.parse(dataFileContent);
     resp.setHeader('Content-type', 'application/json');
-    const result = data.find((item: any) => item.id === +req.params.id);
+    const result = data.Things.find((item: any) => item.id === +req.params.id);
     if (result) {
         resp.end(JSON.stringify(result));
     } else {
@@ -26,20 +30,33 @@ export const getIdController = (req: Request, resp: Response) => {
 };
 
 export const postController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
+
+    let data = JSON.parse(dataFileContent);
     console.log(data, 'PRUEBAAAAAA');
-    const newThings = { ...req.body, id: data[data.length - 1].id + 1 };
-    data.push(newThings);
+    const newThings = {
+        ...req.body,
+        id: data.Things[data.Things.length - 1].id + 1,
+    };
+    data.Things.push(newThings);
     console.log(data, 'INCLUIDO');
 
-    await fs.writeFile(dataFilePath, dataFileContent);
+    await fs.writeFile(dataFilePath, JSON.stringify(data));
     resp.setHeader('Content-type', 'application/json');
     resp.status(201);
     resp.end(JSON.stringify(newThings));
 };
 
-export const patchController = (req: Request, resp: Response) => {
+export const patchController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
+
+    let data = JSON.parse(dataFileContent);
     let newThings;
-    data = data.map((item: any) => {
+    data.Things = data.Things.map((item: any) => {
         if (item.id === +req.params.id) {
             newThings = { ...item, ...req.body };
             return newThings;
@@ -47,13 +64,21 @@ export const patchController = (req: Request, resp: Response) => {
             return item;
         }
     });
+    await fs.writeFile(dataFilePath, JSON.stringify(data));
     resp.setHeader('Content-type', 'application/json');
     resp.end(JSON.stringify(newThings));
 };
 
-export const deleteController = (req: Request, resp: Response) => {
-    const prevLength = data.length;
-    data = data.filter((item: any) => item.id !== +req.params.id);
-    resp.status(prevLength === data.length ? 404 : 202);
+export const deleteController = async (req: Request, resp: Response) => {
+    let dataFileContent = await fs.readFile(dataFilePath, {
+        encoding: 'utf-8',
+    });
+
+    let data = JSON.parse(dataFileContent);
+    const prevLength = data.Things.length;
+    data.Things = data.Things.filter((item: any) => item.id !== +req.params.id);
+
+    fs.writeFile(dataFilePath, JSON.stringify(data));
+    resp.status(prevLength === data.Things.length ? 404 : 202);
     resp.end(JSON.stringify({}));
 };

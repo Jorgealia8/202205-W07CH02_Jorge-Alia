@@ -1,22 +1,6 @@
 {
     "Things": [
-        {
-            "id": 1,
-            "name": "manejarGIT",
-            "category": "front",
-            "difficulty": 5
-        },
-        {
-            "id": 2,
-            "name": "HTML",
-            "category": "front",
-            "difficulty": 6
-        },
-        {
-            "id": 3,
-            "name": "CSS",
-            "category": "front",
-            "difficulty": 7
-        }
+        { "id": 1, "name": "manejarGIT", "category": "front", "difficulty": 2 },
+        { "id": 3, "name": "CSS", "category": "front", "difficulty": 7 }
     ]
 }
