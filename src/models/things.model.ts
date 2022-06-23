@@ -21,10 +21,7 @@ export class Things extends DataModel<iThings> implements iThings {
         this.id = 0;
     }
     async findAll(): Promise<Array<iThings>> {
-        const { connect, collection } = await mongoConnect(
-            'ISDIJORGE',
-            'Thigns'
-        );
+        const { connect, collection } = await mongoConnect('ISDI', 'notes');
         const cursor = collection.find();
         const result = await (cursor.toArray() as unknown as Promise<
             Array<iThings>
