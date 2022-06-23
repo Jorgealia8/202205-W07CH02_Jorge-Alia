@@ -1,20 +1,13 @@
 import { Router } from 'express';
-import {
-    deleteController,
-    getController,
-    getIdController,
-    patchController,
-    postController,
-} from '../controllers/things.controller.js';
+import { DataController } from '../controllers/things.controller.second.js';
+import { Things } from '../models/things.model.js';
+
+export const thingsController = new DataController(new Things('things'));
 
 export const thingsRouter = Router();
 
-thingsRouter.get('/', getController);
-
-thingsRouter.get('/:id', getIdController);
-
-thingsRouter.post('/', postController);
-
-thingsRouter.patch('/:id', patchController);
-
-thingsRouter.delete('/:id', deleteController);
+thingsRouter.get('/', thingsController.getAllController);
+thingsRouter.get('/:id', thingsController.getController);
+thingsRouter.post('/', thingsController.postController);
+thingsRouter.patch('/:id', thingsController.patchController);
+thingsRouter.delete('/:id', thingsController.deleteController);
