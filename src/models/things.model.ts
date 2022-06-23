@@ -26,12 +26,10 @@ export class Things extends DataModel<iThings> implements iThings {
         const result = await (cursor.toArray() as unknown as Promise<
             Array<iThings>
         >);
-        console.log(result);
         connect.close();
         return result;
     }
     async find(id: string): Promise<iThings | undefined> {
-        console.log(id);
         const { connect, collection } = await mongoConnect('ISDI', 'notes');
         const dbId = new ObjectId(id);
         const result = (await collection.findOne({
@@ -64,7 +62,6 @@ export class Things extends DataModel<iThings> implements iThings {
         const dbId = new ObjectId(id);
         const result = await collection.findOneAndDelete({ _id: dbId });
         connect.close();
-        console.log(result);
         if (!result.value) return { status: 404 };
         return { status: 202 };
     }

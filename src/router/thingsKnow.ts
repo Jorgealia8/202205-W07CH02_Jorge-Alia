@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { DataController } from '../controllers/things.controller.second.js';
+import { DataController } from '../controllers/things.controller.js';
 import { Things } from '../models/things.model.js';
 
 export const thingsController = new DataController(new Things('things'));
